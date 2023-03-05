@@ -52,6 +52,16 @@
   {
     "kind": 2,
     "language": "javascript",
-    "value": "let gameIsRunning = true;\r\n\r\nfunction checkCollision(){\r\n    if(ship.altitude > 405){        \r\n        if(ship.velocity > 5){\r\n            // Speed would be too high at contact [CRASH]\r\n        }else{\r\n            // Speed would be safe for contact [LAND]\r\n        }\r\n        ship.velocity = 0;\r\n        gameIsRunning = false;\r\n    }\r\n}\r\n\r\nfunction draw(){\r\n    if(gameIsRunning){\r\n        drawEnvironment();\r\n        applyGravity();\r\n        accelerateShip();\r\n        checkCollision();\r\n        drawShip(ship.latitude, ship.altitude);\r\n    }\r\n}"
+    "value": "let gameIsRunning = true;\r\nlet crashVelocityThreshold = 5;\r\n\r\nfunction checkCollision(){\r\n    if(ship.altitude > 405){        \r\n        if(ship.velocity > crashVelocityThreshold){\r\n            gameIsRunning = false;\r\n            stroke(255);\r\n            text(Math.floor(ship.velocity), 140, 220);            \r\n            // Speed would be too high at contact [CRASH]\r\n        }else{\r\n            // Speed would be safe for contact [LAND]\r\n        }\r\n        ship.altitude = 405;\r\n        ship.velocity = 0;\r\n        ship.acceleration = 0;\r\n    }\r\n}\r\n\r\nfunction draw(){\r\n    if(gameIsRunning){\r\n        drawEnvironment();\r\n        applyGravity();\r\n        accelerateShip();\r\n        checkCollision();\r\n        drawShip(ship.latitude, ship.altitude);\r\n    }\r\n}"
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "**5. Write thruster logic**"
+  },
+  {
+    "kind": 2,
+    "language": "javascript",
+    "value": "let thrusterAcceleration = 0.12;\r\n\r\nfunction activateThrusters(){\r\n    ship.acceleration -= thrusterAcceleration;\r\n}\r\n\r\nfunction checkInput(){\r\n    if(keyIsPressed){\r\n        if(key === \" \"){\r\n            activateThrusters();\r\n        }\r\n    }\r\n}\r\n\r\nfunction draw(){\r\n    if(gameIsRunning){\r\n        drawEnvironment();\r\n        applyGravity();\r\n        checkInput();\r\n        accelerateShip();\r\n        checkCollision();        \r\n        drawShip(ship.latitude, ship.altitude);\r\n    }\r\n    //checkInput(); \r\n}"
   }
 ]
