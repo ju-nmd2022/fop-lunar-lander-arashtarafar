@@ -62,6 +62,16 @@
   {
     "kind": 2,
     "language": "javascript",
-    "value": "let thrusterAcceleration = 0.12;\r\n\r\nfunction activateThrusters(){\r\n    ship.acceleration -= thrusterAcceleration;\r\n}\r\n\r\nfunction checkInput(){\r\n    if(keyIsPressed){\r\n        if(key === \" \"){\r\n            activateThrusters();\r\n        }\r\n    }\r\n}\r\n\r\nfunction draw(){\r\n    if(gameIsRunning){\r\n        drawEnvironment();\r\n        applyGravity();\r\n        checkInput();\r\n        accelerateShip();\r\n        checkCollision();        \r\n        drawShip(ship.latitude, ship.altitude);\r\n    }\r\n    //checkInput(); \r\n}"
+    "value": "let thrusterAcceleration = 0.12;\r\n\r\nfunction activateThrusters(){\r\n    ship.acceleration -= thrusterAcceleration;\r\n}\r\n\r\nfunction checkInput(){\r\n    if(keyIsPressed){\r\n        if(key === \" \"){\r\n            activateThrusters();\r\n        }\r\n    }\r\n}\r\n\r\nfunction draw(){\r\n    if(gameIsRunning){\r\n        drawEnvironment();\r\n        applyGravity();\r\n        checkInput();\r\n        accelerateShip();\r\n        checkCollision();        \r\n        drawShip(ship.latitude, ship.altitude);\r\n    }\r\n}"
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "**6. Write speedometer/altitude meter logic**"
+  },
+  {
+    "kind": 2,
+    "language": "javascript",
+    "value": "function drawSpeedometer(){\r\n    push();\r\n    stroke(200);\r\n    fill(200);\r\n    text(\"Velocity:  \" + Math.abs(Math.floor(ship.velocity)), 35, 35);\r\n    pop();\r\n}\r\n\r\nfunction drawAltitudeMeter(){\r\n    push();\r\n    stroke(200);\r\n    fill(200);\r\n    text(\"Altitude:  \" + (405 - Math.floor(ship.altitude)), 205, 35);\r\n    pop();\r\n}\r\n\r\nfunction draw(){\r\n    if(gameIsRunning){\r\n        drawEnvironment();\r\n        applyGravity();\r\n        checkInput();\r\n        accelerateShip();\r\n        drawSpeedometer();        \r\n        checkCollision();\r\n        drawAltitudeMeter();\r\n        drawShip(ship.latitude, ship.altitude);\r\n    }\r\n}"
   }
 ]
