@@ -1,0 +1,32 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "**Core Steps**\r\n\r\n1. Draw ship\r\n2. Draw Environment\r\n3. Write gravity logic\r\n4. Write crash/land logic\r\n5. Write velocity/acceleration logic\r\n6. Create start/end screens\r\n7. Write score logic"
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "**0. Initialize Drawable Area**"
+  },
+  {
+    "kind": 2,
+    "language": "javascript",
+    "value": "function setup(){\r\n    createCanvas(300, 450);\r\n}"
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "**1. Draw Ship**"
+  },
+  {
+    "kind": 2,
+    "language": "javascript",
+    "value": "function draw(){\r\n    drawShip(155, 125);\r\n}\r\n\r\nfunction drawShip(positionX, positionY){\r\n    push();\r\n    translate(positionX, positionY);\r\n    background(20);\r\n    noFill();\r\n    stroke(220);\r\n    triangle(-25, 25, 0, -25, 25, 25);\r\n    pop();\r\n}"
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "**2. Draw Environment**"
+  }
+]
