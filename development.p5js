@@ -33,5 +33,15 @@
     "kind": 2,
     "language": "javascript",
     "value": "function drawEnvironment(){\r\n    background(20);\r\n    push();\r\n    noFill();\r\n    stroke(220);\r\n    rect(5, 5, width - 10, height - 10);\r\n    rect(10, 10, width - 20, height - 20);\r\n    pop();\r\n}\r\n\r\nfunction draw(){\r\n    drawEnvironment();\r\n    drawShip(155, 125);\r\n}"
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "**3. Write Gravity Logic**"
+  },
+  {
+    "kind": 2,
+    "language": "javascript",
+    "value": "let gravity = 0.05;\r\nlet ship = {\r\n    latitude: 155,\r\n    altitude: 55,\r\n    acceleration: 0,\r\n    velocity: 0\r\n};\r\n\r\nfunction applyGravity(){    \r\n    ship.acceleration = gravity;\r\n}\r\n\r\nfunction accelerateShip(){\r\n    ship.velocity += ship.acceleration;\r\n    ship.altitude += ship.velocity;\r\n}\r\n\r\nfunction draw(){\r\n    drawEnvironment();\r\n    applyGravity();\r\n    accelerateShip();\r\n    drawShip(ship.latitude, ship.altitude);\r\n}"
   }
 ]
