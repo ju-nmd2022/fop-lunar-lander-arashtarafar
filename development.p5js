@@ -22,11 +22,16 @@
   {
     "kind": 2,
     "language": "javascript",
-    "value": "function draw(){\r\n    drawShip(155, 125);\r\n}\r\n\r\nfunction drawShip(positionX, positionY){\r\n    push();\r\n    translate(positionX, positionY);\r\n    background(20);\r\n    noFill();\r\n    stroke(220);\r\n    triangle(-25, 25, 0, -25, 25, 25);\r\n    pop();\r\n}"
+    "value": "function draw(){\r\n    background(20);\r\n    drawShip(150, 125);\r\n}\r\n\r\nfunction drawShip(positionX, positionY){\r\n    push();\r\n    translate(positionX, positionY);    \r\n    noFill();\r\n    stroke(220);\r\n    triangle(-25, 25, 0, -25, 25, 25);\r\n    pop();\r\n}"
   },
   {
     "kind": 1,
     "language": "markdown",
     "value": "**2. Draw Environment**"
+  },
+  {
+    "kind": 2,
+    "language": "javascript",
+    "value": "function draw(){\r\n    drawEnvironment();\r\n    drawShip(155, 125);\r\n}\r\n\r\nfunction drawEnvironment(){\r\n    background(20);\r\n    push();\r\n    noFill();\r\n    stroke(220);\r\n    rect(5, 5, width - 10, height - 10);\r\n    rect(10, 10, width - 20, height - 20);\r\n    pop();\r\n}"
   }
 ]
