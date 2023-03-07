@@ -2,7 +2,7 @@
   {
     "kind": 1,
     "language": "markdown",
-    "value": "**Core Steps**\r\n\r\n1. Draw ship\r\n2. Draw Environment\r\n3. Write gravity logic\r\n4. Write crash/land logic\r\n5. Write thruster logic\r\n6. Write speedometer/altitude meter logic (changed order)\r\n7. Create start/end screens (changed order)"
+    "value": "**Core Steps**\r\n\r\n1. Draw ship\r\n2. Draw Environment\r\n3. Write gravity logic\r\n4. Write crash/land logic\r\n5. Write thruster logic\r\n6. Write speedometer/altitude meter logic (later added, changed order)\r\n7. Create start/end screens (changed order)\r\n8. Make thruster trail [+ animation] (later added)\r\n9. Make ship destruction animation (later added)\r\n10. Change typefaces (later added)\r\n11. Add sound (later added)"
   },
   {
     "kind": 1,
@@ -22,7 +22,7 @@
   {
     "kind": 2,
     "language": "javascript",
-    "value": "function drawShip(positionX, positionY){\r\n    push();\r\n    translate(positionX, positionY);    \r\n    noFill();\r\n    stroke(220);\r\n    triangle(-25, 25, 0, -25, 25, 25);\r\n    pop();\r\n}\r\n\r\nfunction draw(){\r\n    background(20);\r\n    drawShip(150, 125);\r\n}"
+    "value": "function drawShip(positionX, positionY){\r\n    push();\r\n    translate(positionX, positionY);    \r\n    noFill();\r\n    stroke(220);\r\n    triangle(-25, 25, 0, -25, 25, 25);\r\n    fill(20);\r\n    triangle(-15, 25, 0, -45, 15, 25);\r\n    pop();\r\n}\r\n\r\nfunction draw(){\r\n    background(20);\r\n    drawShip(150, 125);\r\n}"
   },
   {
     "kind": 1,
@@ -32,7 +32,7 @@
   {
     "kind": 2,
     "language": "javascript",
-    "value": "function drawEnvironment(){\r\n    background(20);\r\n    push();\r\n    noFill();\r\n    stroke(220);\r\n    rect(5, -1, width - 10, height + 10);\r\n    rect(10, -1, width - 20, height + 10);\r\n    ellipse(150, 550, 300);\r\n    pop();\r\n}\r\n\r\nfunction draw(){\r\n    drawEnvironment();\r\n    drawShip(155, 125);\r\n}"
+    "value": "function drawEnvironment(){\r\n    background(20);\r\n    push();\r\n    noFill();\r\n    stroke(220);\r\n    rect(5, -1, width - 10, height + 10);\r\n    rect(10, -1, width - 20, height + 10);    \r\n    pop();\r\n}\r\n\r\nfunction draw(){\r\n    drawEnvironment();\r\n    drawShip(155, 125);\r\n}"
   },
   {
     "kind": 1,
@@ -83,5 +83,15 @@
     "kind": 2,
     "language": "javascript",
     "value": "let gameState = \"start\";\r\n\r\nfunction displayPrompt(message, positionX, positionY){\r\n    push();\r\n    stroke(200);\r\n    fill(200);\r\n    text(message, positionX, positionY);\r\n    pop();\r\n}\r\n\r\nfunction draw(){\r\n    switch(gameState){\r\n        case \"start\":\r\n            drawEnvironment();\r\n            drawShip(ship.latitude, ship.altitude);\r\n            displayPrompt(\"You're in SPACE. Press it.\", 85, 220);\r\n            checkInput();\r\n            break;\r\n        case \"game\":\r\n            if(gameIsRunning){\r\n                drawEnvironment();\r\n                applyGravity();\r\n                checkInput();\r\n                accelerateShip();\r\n                drawSpeedometer();        \r\n                checkCollision();\r\n                drawAltitudeMeter();\r\n                drawShip(ship.latitude, ship.altitude);\r\n            }\r\n            break;\r\n        case \"end\":\r\n            checkInput();\r\n            break;\r\n        default:\r\n            break;\r\n    }\r\n    drawSpeedometer();\r\n    drawAltitudeMeter();\r\n}"
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "**8. Make thruster trail [+ animation]**"
+  },
+  {
+    "kind": 2,
+    "language": "javascript",
+    "value": "let shipTrailLines = [];\r\n\r\nfunction drawShipTrail(){\r\n    \r\n    // Create trail lines\r\n    if((frameCount % 10) == 0){\r\n        shipTrailLines = [];\r\n        for(let counter = 0; counter < 3; counter ++){\r\n            shipTrailLines.push({\r\n                trailPositionX: Math.ceil(Math.random() * 20),\r\n                trailLength: Math.abs(Math.ceil(Math.random() * ship.velocity * 35) % 35),\r\n                trailDissipationFrames: 10\r\n            });\r\n        }        \r\n    }\r\n    // Draw trail lines\r\n    push();\r\n    for(let trailLine of shipTrailLines){\r\n        noFill();\r\n        stroke(220, 220, 200, Math.floor(255 * (trailLine.trailDissipationFrames - (frameCount % trailLine.trailDissipationFrames)) / trailLine.trailDissipationFrames));\r\n        line(\r\n            trailLine.trailPositionX + ship.latitude - 10,\r\n            ship.altitude + 35,\r\n            trailLine.trailPositionX + ship.latitude - 10,\r\n            trailLine.trailLength + ship.altitude + 35\r\n        );\r\n    }\r\n    pop();\r\n}\r\n\r\nfunction drawPlanet(){\r\n    push();\r\n    stroke(220);\r\n    fill(20);\r\n    ellipse(150, 550, 300);\r\n    pop();\r\n}\r\n\r\nfunction draw(){\r\n    switch(gameState){\r\n        case \"start\":\r\n            drawEnvironment();\r\n            drawShip(ship.latitude, ship.altitude);\r\n            drawPlanet();  \r\n            displayPrompt(\"You're in SPACE. Press it.\", 85, 220);\r\n            checkInput();\r\n            break;\r\n        case \"game\":\r\n            if(gameIsRunning){\r\n                drawEnvironment();                \r\n                applyGravity();\r\n                checkInput();\r\n                accelerateShip();\r\n                drawSpeedometer();        \r\n                checkCollision();\r\n                drawAltitudeMeter();\r\n                drawShip(ship.latitude, ship.altitude);\r\n                drawShipTrail();   \r\n                drawPlanet();             \r\n            }\r\n            break;\r\n        case \"end\":\r\n            checkInput();\r\n            break;\r\n        default:\r\n            break;\r\n    }\r\n    drawSpeedometer();\r\n    drawAltitudeMeter();\r\n}"
   }
 ]
