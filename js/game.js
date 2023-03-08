@@ -1,3 +1,6 @@
+// Developer variables
+let developerMode = true;
+
 // Game state variables
 let gameIsRunning = false;
 let gameState = "start";
@@ -24,7 +27,8 @@ let shipTrailLines = [];
 
 function setup(){
     frameRate(30);
-    createCanvas(300, 450);
+    let canvas = createCanvas(300, 450);
+    if(!developerMode) canvas.parent("gameWindow");
 }
 
 function drawShip(positionX, positionY){
