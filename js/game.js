@@ -1,5 +1,5 @@
 // Developer variables
-let developerMode = true;
+let developerMode = false;
 
 // Game state variables
 let gameIsRunning = false;
@@ -84,7 +84,7 @@ function activateThrusters(){
 
 function checkInput(){
     if(keyIsPressed){
-        if(key === " " || touches.length > 0){
+        if(key === " "){
             switch(gameState){
                 case "start":
                     gameState = "game";
@@ -110,6 +110,33 @@ function checkInput(){
             }
         }
     }
+}
+
+function touchStarted(){
+    switch(gameState){
+        case "start":
+            gameState = "game";
+            gameIsRunning = true;
+            break;
+        case "game":
+            activateThrusters();
+            break;
+        case "win":
+            ship.latitude = 150;
+            ship.altitude = 125;                    
+            gameState = "game"; 
+            gameIsRunning = true;                   
+            break;
+        case "loss":
+            ship.latitude = 150;
+            ship.altitude = 125;                    
+            gameState = "game"; 
+            gameIsRunning = true;                   
+            break;
+        default:
+            break;
+    }
+    return false;
 }
 
 function drawSpeedometer(){
